@@ -1,6 +1,8 @@
 #ifndef FLY_H
 #define FLY_H
 
+#include <QObject>
+
 class Hive;
 
 enum Direction
@@ -17,21 +19,30 @@ enum Direction
 };
 
 class Fly
+        : public QObject
 {
+    Q_OBJECT
 public:
     typedef int Id;
-public:
-    explicit Fly(unsigned int stupidity, Hive* hive);
 
-    void life();
+signals:
+    void positionChanged(int, int);
+    void died(int);
+
+public:
+    explicit Fly(int pos, unsigned int stupidity, Hive* hive);
+
+
+    void live();
+
     bool isDead() const;
-
-public:
     Id id() const;
+    int position() const;
 
 private:
-
     static Id generateId();
+    void desease();
+    void printStatistics();
 
 private:
     Id m_id;
@@ -40,7 +51,9 @@ private:
     const int m_maxAge;
     int m_age;
     int m_mileage;
+    bool m_isDead;
 
+    int m_position;
 };
 
 #endif // FLY_H

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/flyZ">
+		<file>flyZ.qss</file>
+        <file>alive.png</file>
+        <file>dead.png</file>
+        <file>aliveAndDead.png</file>
+	</qresource>
+</RCC>

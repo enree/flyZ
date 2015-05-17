@@ -1,0 +1,11 @@
+QLabel[alive="true"]{
+    image: url(:/flyZ/alive.png)
+}
+
+QLabel[dead="true"]{
+    image: url(:/flyZ/dead.png)
+}
+
+QLabel[aliveAndDead="true"]{
+    image: url(:/flyZ/aliveAndDead.png)
+}
