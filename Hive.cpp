@@ -2,9 +2,9 @@
 
 #include <QMutexLocker>
 #include <QPoint>
-#include <QtConcurrent/QtConcurrentRun>
 #include <QThreadPool>
 #include <QMessageBox>
+
 
 #include <functional>
 
@@ -20,6 +20,7 @@ Hive::Hive(int size, int capacity, QObject *parent) :
 
 Hive::~Hive()
 {
+    plaque();
     qDeleteAll(m_flies);
 }
 
@@ -49,7 +50,7 @@ void Hive::addFly(int stupidity)
             this, SLOT(positionChanged(int,int)), Qt::QueuedConnection);
     connect(fly, SIGNAL(died(int)), this, SLOT(onDied(int)), Qt::QueuedConnection);
 
-    QtConcurrent::run(fly, &Fly::live);
+    m_futureFlies.append(QtConcurrent::run(fly, &Fly::live));
 }
 
 int Hive::canMove(int position, Direction direction)
@@ -75,6 +76,19 @@ int Hive::canMove(int position, Direction direction)
 int Hive::size() const
 {
     return m_size;
+}
+
+void Hive::plaque()
+{
+    for(auto fly: m_flies)
+    {
+        fly->suddenDeath();
+    }
+
+    for (auto future: m_futureFlies)
+    {
+        future.waitForFinished();
+    }
 }
 
 void Hive::positionChanged(int oldPos, int newPos)

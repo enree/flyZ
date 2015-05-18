@@ -7,6 +7,9 @@
 #include <QMutex>
 #include <QList>
 #include <QMap>
+#include <QPair>
+
+#include <QtConcurrent/QtConcurrentRun>
 
 class Hive : public QObject
 {
@@ -22,7 +25,7 @@ signals:
 public:
     int canMove(int position, Direction direction);
     int size() const;
-
+    void plaque();
 
 public slots:
 
@@ -46,6 +49,8 @@ private:
     QList<Fly*> m_flies;
     // Cell -> alive:dead
     QMap<int, QPair<int, int> > m_field;
+
+    QList<QFuture<void> > m_futureFlies;
 };
 
 #endif // HIVE_H

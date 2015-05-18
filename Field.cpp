@@ -76,3 +76,8 @@ void Field::updateStyles()
         label->update();
     });
 }
+
+void Field::on_plaqueButton_clicked()
+{
+    m_hive->plaque();
+}

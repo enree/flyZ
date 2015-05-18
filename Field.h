@@ -22,6 +22,8 @@ private slots:
     void on_add_clicked();
     void onCellChanged(int position, const QPair<int, int>& aliveOrDead);
 
+    void on_plaqueButton_clicked();
+
 private:
     void createField();
     void updateStyles();

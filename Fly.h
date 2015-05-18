@@ -2,6 +2,8 @@
 #define FLY_H
 
 #include <QObject>
+#include <QScopedPointer>
+#include <QTimer>
 
 class Hive;
 
@@ -38,6 +40,10 @@ public:
     bool isDead() const;
     Id id() const;
     int position() const;
+    void suddenDeath();
+
+private slots:
+    void oneStep();
 
 private:
     static Id generateId();
@@ -54,6 +60,8 @@ private:
     bool m_isDead;
 
     int m_position;
+
+    QScopedPointer<QTimer> m_timer;
 };
 
 #endif // FLY_H
